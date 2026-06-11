@@ -64,4 +64,4 @@ Invoke-RestMethod -Method Post -Uri 'http://localhost:5002/api/auth/register' -C
 Notes
 
 - The server `app.js` no longer exits when env vars are missing to avoid build-time failures on serverless platforms — make sure to set the env vars in the hosting platform.
-- The client now respects `VITE_API_BASE_URL` for cross-origin deployments. If empty, it will call the same origin plus `/api`.
+- The client now respects `VITE_API_BASE_URL` for cross-origin deployments. In production, if `VITE_API_BASE_URL` is unset, the client will default to `https://volunteer-management-system-1-z87l.onrender.com/api`.

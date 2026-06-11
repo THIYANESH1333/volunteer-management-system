@@ -1,12 +1,15 @@
 import axios from 'axios';
 
 const defaultBackendBase = 'https://volunteer-management-system-1-z87l.onrender.com/api';
-const resolvedBase = (typeof window !== 'undefined')
-    ? (import.meta.env.VITE_API_BASE_URL || (window.location.hostname.includes('vercel.app') ? defaultBackendBase : `${window.location.origin}/api`))
-    : (import.meta.env.VITE_API_BASE_URL || '/api');
+const envBase = import.meta.env.VITE_API_BASE_URL;
+const isLocalHost = typeof window !== 'undefined' && /(^localhost$|^127\.|^0\.0\.0\.0|\.local$)/i.test(window.location.hostname);
+const resolvedBase = typeof window !== 'undefined'
+    ? (envBase || (isLocalHost ? `${window.location.origin}/api` : defaultBackendBase))
+    : (envBase || '/api');
 
+const normalizedBase = resolvedBase.replace(/\/+$/, '') + '/';
 const api = axios.create({
-    baseURL: resolvedBase
+    baseURL: normalizedBase
 });
 
 // Normalize request URLs so baseURL is always applied.
