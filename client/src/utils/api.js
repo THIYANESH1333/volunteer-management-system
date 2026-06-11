@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const resolvedBase = (typeof window !== 'undefined')
+    ? (import.meta.env.VITE_API_BASE_URL || `${window.location.origin}/api`)
+    : (import.meta.env.VITE_API_BASE_URL || '/api');
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api'
+    baseURL: resolvedBase
 });
 
 // Add a request interceptor

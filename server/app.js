@@ -1,9 +1,12 @@
-require('dotenv').config();
+// Load local .env only in development to avoid relying on files in production
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
-// Crash server if essential environment variables are missing
+// Warn if essential environment variables are missing but do not exit.
+// In production (Vercel) env vars should be configured in the platform settings.
 if (!process.env.MONGODB_URI || !process.env.JWT_SECRET) {
-    console.error('FATAL ERROR: MONGODB_URI or JWT_SECRET is not defined in the .env file.');
-    process.exit(1);
+  console.warn('WARNING: MONGODB_URI or JWT_SECRET is not defined. Configure these in your hosting platform environment settings.');
 }
 
 const express = require('express');
@@ -34,15 +37,19 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI, {
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-}).then(() => {
+  }).then(() => {
     console.log('✅ MongoDB connected');
-}).catch(err => {
+  }).catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
     console.error('⚠️  Please ensure MongoDB is running or your Mongo URI is correct.');
-});
+  });
+} else {
+  console.warn('Skipping MongoDB connection because MONGODB_URI is not set.');
+}
 
 // Check MongoDB connection status middleware
 const checkDBConnection = (req, res, next) => {
