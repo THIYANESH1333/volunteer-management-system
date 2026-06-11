@@ -68,20 +68,20 @@ app.get('/', (req, res) => {
     message: 'Volunteer Management API Server',
     status: 'running',
     endpoints: {
-      auth: '/api/auth',
-      events: '/api/events',
-      registrations: '/api/registrations',
-      users: '/api/users',
-      problems: '/api/problems'
+      auth: '/auth',
+      events: '/events',
+      registrations: '/registrations',
+      users: '/users',
+      problems: '/problems'
     }
   });
 });
 
 // Routes (with DB connection check)
-app.use('/api/auth', checkDBConnection, authRoutes);
-app.use('/api/events', checkDBConnection, eventRoutes);
-app.use('/api/registrations', checkDBConnection, registrationRoutes);
-app.use('/api/users', checkDBConnection, usersRoutes);
-app.use('/api/problems', checkDBConnection, problemsRoute);
+app.use('/auth', checkDBConnection, authRoutes);
+app.use('/events', checkDBConnection, eventRoutes);
+app.use('/registrations', checkDBConnection, registrationRoutes);
+app.use('/users', checkDBConnection, usersRoutes);
+app.use('/problems', checkDBConnection, problemsRoute);
 
 module.exports = app;
