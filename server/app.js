@@ -78,10 +78,10 @@ app.get('/', (req, res) => {
 });
 
 // Routes (with DB connection check)
-app.use('/auth', checkDBConnection, authRoutes);
-app.use('/events', checkDBConnection, eventRoutes);
-app.use('/registrations', checkDBConnection, registrationRoutes);
-app.use('/users', checkDBConnection, usersRoutes);
-app.use('/problems', checkDBConnection, problemsRoute);
+app.use(['/auth', '/api/auth'], checkDBConnection, authRoutes);
+app.use(['/events', '/api/events'], checkDBConnection, eventRoutes);
+app.use(['/registrations', '/api/registrations'], checkDBConnection, registrationRoutes);
+app.use(['/users', '/api/users'], checkDBConnection, usersRoutes);
+app.use(['/problems', '/api/problems'], checkDBConnection, problemsRoute);
 
 module.exports = app;
