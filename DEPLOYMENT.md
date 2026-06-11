@@ -13,9 +13,11 @@ Required environment variables (set these in Vercel or Render):
 
 Vercel (single project hosting both frontend and serverless API)
 
-1. Ensure `vercel.json` exists at repo root (already present).
-2. In Vercel dashboard, set the Environment Variables (Production & Preview): `MONGODB_URI`, `JWT_SECRET`. Optionally set `VITE_API_BASE_URL` to `${VERCEL_URL}/api` if you need it.
-3. Connect the GitHub repo and deploy. Vercel will build `client` as a static build and expose the Express app under `/api` via `api/[...slug].js`.
+1. Ensure `vercel.json` exists at the repository root (already present).
+2. In Vercel dashboard, set the Root Directory to the repo root (leave it empty), not `client/`.
+3. Ensure there is no nested `client/vercel.json` or `client/api/[...slug].js` in the deployed project. Vercel must use the root `vercel.json`.
+4. In Vercel dashboard, set the Environment Variables (Production & Preview): `MONGODB_URI`, `JWT_SECRET`. Optionally set `VITE_API_BASE_URL` to `${VERCEL_URL}/api` if you need it.
+5. Connect the GitHub repo and deploy. Vercel will build `client` as a static build and expose the Express app under `/api` via `api/[...slug].js`.
 
 Render (separate services)
 

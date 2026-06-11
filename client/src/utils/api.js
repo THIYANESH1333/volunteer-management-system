@@ -8,8 +8,12 @@ const api = axios.create({
     baseURL: resolvedBase
 });
 
-// Add a request interceptor
+// Normalize request URLs so baseURL is always applied.
 api.interceptors.request.use(config => {
+    if (config.url) {
+        config.url = config.url.replace(/^\/+/, '');
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
         config.headers['x-auth-token'] = token;
