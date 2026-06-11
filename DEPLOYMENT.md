@@ -9,15 +9,18 @@ Required environment variables (set these in Vercel or Render):
 - MONGODB_URI: MongoDB connection string (e.g., mongodb+srv://<user>:<pass>@cluster0.mongodb.net/<db>?retryWrites=true&w=majority)
 - JWT_SECRET: Secret used to sign JWT tokens
 - PORT: (optional) backend port for local testing (default 5002)
-- VITE_API_BASE_URL: (optional) If frontend is hosted separately from backend, set this to the backend base URL including `/api` (e.g., `https://<backend-host>/api`). If frontend + backend are deployed together on Vercel, leave unset.
+- VITE_API_BASE_URL: Set this when frontend is hosted separately from backend. For your current setup, use:
+  `https://volunteer-management-system-1-z87l.onrender.com/api`
+  If frontend + backend are deployed together on Vercel, leave this unset.
 
 Vercel (single project hosting both frontend and serverless API)
 
 1. Ensure `vercel.json` exists at the repository root (already present).
 2. In Vercel dashboard, set the Root Directory to the repo root (leave it empty), not `client/`.
 3. Ensure there is no nested `client/vercel.json` or `client/api/[...slug].js` in the deployed project. Vercel must use the root `vercel.json`.
-4. In Vercel dashboard, set the Environment Variables (Production & Preview): `MONGODB_URI`, `JWT_SECRET`. Optionally set `VITE_API_BASE_URL` to `${VERCEL_URL}/api` if you need it.
-5. Connect the GitHub repo and deploy. Vercel will build `client` as a static build and expose the Express app under `/api` via `api/[...slug].js`.
+4. In Vercel dashboard, set the Environment Variables (Production & Preview): `VITE_API_BASE_URL=https://volunteer-management-system-1-z87l.onrender.com/api`.
+   - Do not set `MONGODB_URI` or `JWT_SECRET` in Vercel for the frontend-only deployment.
+5. Connect the GitHub repo and deploy. Vercel will build `client` as a static site.
 
 Render (separate services)
 

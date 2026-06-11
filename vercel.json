@@ -7,16 +7,6 @@
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "api/[...slug].js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
     }
   ]
 }
