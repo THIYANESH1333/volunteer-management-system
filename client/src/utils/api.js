@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const defaultBackendBase = 'https://volunteer-management-system-1-z87l.onrender.com/api';
 const resolvedBase = (typeof window !== 'undefined')
-    ? (import.meta.env.VITE_API_BASE_URL || `${window.location.origin}/api`)
+    ? (import.meta.env.VITE_API_BASE_URL || (window.location.hostname.includes('vercel.app') ? defaultBackendBase : `${window.location.origin}/api`))
     : (import.meta.env.VITE_API_BASE_URL || '/api');
 
 const api = axios.create({
